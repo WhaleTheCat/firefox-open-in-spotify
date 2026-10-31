@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "name": "Open in Spotify App",
+  "version": "1.1.0",
+  "description": "Opens Spotify links in the desktop app instead of the browser.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "*://open.spotify.com/*",
+    "*://play.spotify.com/*"
+  ],
+  "background": {
+    "scripts": ["spotify-link.js", "background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icons/on.svg",
+    "default_title": "Spotify links: app"
+  },
+  "icons": {
+    "48": "icons/on.svg",
+    "96": "icons/on.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "open-in-spotify-app@whalethecat.local",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
