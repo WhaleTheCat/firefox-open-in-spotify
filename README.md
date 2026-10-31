@@ -1,58 +1,58 @@
 # Open in Spotify App
 
-Розширення для Firefox: посилання на треки, альбоми, плейлисти, артистів, подкасти й профілі Spotify відкриваються в десктопному додатку, а не в браузері. Працює на macOS і Windows, бо обидві версії додатка обробляють схему `spotify:`.
+A Firefox extension that opens links to Spotify tracks, albums, playlists, artists, podcasts and profiles in the desktop app instead of the browser. It works on macOS and Windows, because both versions of the app handle the `spotify:` scheme.
 
-Лише для Firefox: у Chrome воно не запрацює, бо там немає Manifest V2 і блокувального `webRequest`.
+Firefox only: it won't work in Chrome, which no longer supports Manifest V2 and blocking `webRequest`.
 
-## Як працює
+## How it works
 
-- Перехоплюється лише навігація всієї вкладки на `open.spotify.com` або `play.spotify.com`. Вбудовані плеєри на сайтах не чіпаються.
-- Адреса перетворюється на `spotify:тип:id` і передається в додаток.
-- Вкладка, відкрита лише для цього посилання, закривається, щойно Firefox втратить фокус (Spotify вийшов на передній план), або через 15 секунд. Миттєво закривати не можна: разом із вкладкою зник би запит Firefox на дозвіл.
-- Якщо посилання натиснуто без відкриття нової вкладки, ти просто лишаєшся на поточній сторінці.
-- Посилання з іншого додатка: вікно згортається, коли Spotify виходить на передній план. Інші вкладки лишаються.
-- Якщо закрита вкладка була в вікні єдиною, вікно закривається разом із нею.
-- Кліки всередині Firefox браузер не згортають.
-- Головна, пошук та інші сторінки без контенту лишаються в браузері.
-- Кнопка на панелі вмикає й вимикає перехоплення. Сіра іконка означає, що воно вимкнене.
+- Only full-tab navigation to `open.spotify.com` or `play.spotify.com` is intercepted. Players embedded in websites are left alone.
+- The address is converted to `spotify:type:id` and handed to the app.
+- A tab opened just for this link closes as soon as Firefox loses focus (Spotify came to the front), or after 15 seconds. It can't close immediately, because Firefox's permission prompt would disappear along with the tab.
+- If a link was clicked without opening a new tab, you simply stay on the current page.
+- Link from another app: the window minimizes when Spotify comes to the front. Other tabs stay open.
+- If the closed tab was the only one in its window, the window closes with it.
+- Clicks inside Firefox don't minimize the browser.
+- The home page, search and other non-content pages stay in the browser.
+- The toolbar button turns interception on and off. A gray icon means it's off.
 
-## Тимчасове встановлення для перевірки
+## Temporary install for testing
 
-1. Скопіюй цю теку на комп'ютер із Firefox.
-2. Відкрий `about:debugging#/runtime/this-firefox`.
-3. Натисни **Load Temporary Add-on** і вибери `manifest.json`.
+1. Copy this folder to the computer with Firefox.
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on** and select `manifest.json`.
 
-Після перезапуску Firefox розширення зникне.
+The extension disappears when Firefox restarts.
 
-## Що перевірити
+## What to check
 
-| Дія | Очікуваний результат |
-|-----|----------------------|
-| Вставити `https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC` в адресний рядок нової вкладки | Запит на дозвіл лише вперше (постав «завжди»), відкривається Spotify, вкладка закривається; вікно може згорнутися, бо адресний рядок може виглядати як зовнішнє джерело |
-| Натиснути посилання на Spotify на сайті без `target=_blank` | Відкривається Spotify, сайт лишається на місці, вікно не згортається |
-| Натиснути посилання, що відкривається в новій вкладці | Відкривається Spotify, нова вкладка закривається, вікно не згортається |
-| Firefox відкритий, натиснути посилання в месенджері чи пошті | Відкривається Spotify, нова вкладка закривається, вікно згортається |
-| Відкрити `https://open.spotify.com/` | Лишається у браузері |
-| Натиснути кнопку на панелі й повторити перший рядок | Трек відкривається у браузері, іконка сіра |
+| Action | Expected result |
+|--------|-----------------|
+| Paste `https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC` into the address bar of a new tab | Permission prompt the first time only (choose "always"), Spotify opens, the tab closes; the window may minimize, because the address bar can look like an external source |
+| Click a Spotify link on a website without `target=_blank` | Spotify opens, the website stays in place, the window doesn't minimize |
+| Click a link that opens in a new tab | Spotify opens, the new tab closes, the window doesn't minimize |
+| With Firefox open, click a link in a messenger or email | Spotify opens, the new tab closes, the window minimizes |
+| Open `https://open.spotify.com/` | Stays in the browser |
+| Click the toolbar button and repeat the first row | The track opens in the browser, the icon is gray |
 
-Якщо щось не так, глянь консоль: `about:debugging` → **Inspect** біля розширення.
+If something is wrong, check the console: `about:debugging` → **Inspect** next to the extension.
 
-## Постійне встановлення
+## Permanent install
 
-Звичайний Firefox постійно тримає лише підписані розширення. Підпис безкоштовний і не публікує розширення в каталозі.
+Regular Firefox only keeps signed extensions permanently. Signing is free and doesn't publish the extension to the catalog.
 
-1. Увійди на [addons.mozilla.org](https://addons.mozilla.org/developers/) через акаунт Mozilla.
-2. Натисни **Submit a New Add-on** і вибери **On your own**.
-3. Завантаж `dist/open-in-spotify-app.zip`.
-4. Після автоматичної перевірки завантаж підписаний `.xpi` і перетягни його у вікно Firefox.
+1. Sign in at [addons.mozilla.org](https://addons.mozilla.org/developers/) with a Mozilla account.
+2. Click **Submit a New Add-on** and choose **On your own**.
+3. Upload `dist/open-in-spotify-app.zip`.
+4. After the automatic review, download the signed `.xpi` and drag it into a Firefox window.
 
-Для приватних вікон дозволь розширення окремо: `about:addons` → розширення → **Run in Private Windows**.
+For private windows, allow the extension separately: `about:addons` → the extension → **Run in Private Windows**.
 
-## Обмеження
+## Limitations
 
-- Браузер не бачить, чи встановлено додаток. Якщо Spotify немає, натисни кнопку на панелі, щоб вимкнути перехоплення.
-- Переходи всередині вебплеєра не перехоплюються, бо сторінка не перезавантажується.
+- The browser can't tell whether the app is installed. If you don't have Spotify, click the toolbar button to turn interception off.
+- Navigation inside the web player isn't intercepted, because the page doesn't reload.
 
-## Розробка
+## Development
 
-На macOS: `make test` запускає перевірки адрес, а `make zip` збирає архів у `dist/`. На Windows запакуй у zip `manifest.json`, `background.js`, `spotify-link.js` і теку `icons`, так щоб `manifest.json` лежав у корені архіву.
+On macOS, `make test` runs the address checks and `make zip` builds the archive in `dist/`. On Windows, zip `manifest.json`, `background.js`, `spotify-link.js` and the `icons` folder so that `manifest.json` sits at the root of the archive.
